@@ -5,7 +5,7 @@ import java.util.Observable;
 
 
 /** The state of a game of 2048.
- *  @author TODO: YOUR NAME HERE
+ *  @author Kai Decker
  */
 public class Model extends Observable {
     /** Current contents of the board. */
@@ -110,10 +110,51 @@ public class Model extends Observable {
         boolean changed;
         changed = false;
 
-        // TODO: Modify this.board (and perhaps this.score) to account
         // for the tilt to the Side SIDE. If the board changed, set the
         // changed local variable to true.
-
+        //设置棋盘的视角为 side
+        board.setViewingPerspective(side);
+        // 使用二维数组来判断每个位置的砖块是否被合并
+        boolean[][] is_merge = new boolean[board.size()][board.size()];
+        // 从倒数第2行到第0行
+        for (int i = board.size() - 2; i >= 0; i -= 1) {
+            // 从第0列到最后列
+            for (int j = 0; j < board.size(); j += 1) {
+                Tile t = board.tile(j, i);
+                // 如果砖块 t 为 null，则跳过再检查下一个砖块
+                if (t == null) {
+                    continue;
+                }
+                // 下一行的砖块
+                for (int k = i + 1; k < board.size(); k += 1) {
+                    Tile next = board.tile(j, k);
+                    // 如果砖块 next 为 null 并且没有遍历到最后一行，则继续
+                    if (next == null && k < board.size() - 1) {
+                        continue;
+                    }
+                    // 如果有砖块，但是两个砖块值不相等，或者已经合并，此时检查是否移动了砖块
+                    if (next != null && (next.value() != t.value() ||
+                            (next.value() == t.value() && is_merge[k][j]))) {
+                        if (k - 1 != i) {
+                            board.move(j, k - 1, t);
+                            changed = true;
+                        }
+                        break;
+                    // 如果值相等并且没合并过，执行移动操作
+                    } else {
+                        boolean moved = board.move(j, k, t);
+                        changed = true;
+                        if (moved) {
+                            score += board.tile(j, k).value();
+                            is_merge[k][j] = true;
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+        //将视角转回默认的视角
+        board.setViewingPerspective(Side.NORTH);
         checkGameOver();
         if (changed) {
             setChanged();
@@ -137,7 +178,13 @@ public class Model extends Observable {
      *  Empty spaces are stored as null.
      * */
     public static boolean emptySpaceExists(Board b) {
-        // TODO: Fill in this function.
+        for (int i = 0; i < b.size(); i++) {
+            for (int j = 0; j < b.size(); j++) {
+                if (b.tile(i, j) == null){
+                    return true;
+                }
+            }
+        }
         return false;
     }
 
@@ -147,7 +194,16 @@ public class Model extends Observable {
      * given a Tile object t, we get its value with t.value().
      */
     public static boolean maxTileExists(Board b) {
-        // TODO: Fill in this function.
+        for (int i = 0; i < b.size(); i++) {
+            for (int j = 0; j < b.size(); j++) {
+                if (b.tile(i, j) == null) {
+                    continue;
+                }
+                if (b.tile(i, j).value() == MAX_PIECE) {
+                    return true;
+                }
+            }
+        }
         return false;
     }
 
@@ -158,7 +214,30 @@ public class Model extends Observable {
      * 2. There are two adjacent tiles with the same value.
      */
     public static boolean atLeastOneMoveExists(Board b) {
-        // TODO: Fill in this function.
+        for (int i = 0; i < b.size(); i++) {
+            for (int j = 0; j < b.size(); j++) {
+                // 检查是否有空格
+                if (b.tile(i, j) == null) {
+                    return true;
+                }
+                // 检查上方
+                if (i > 0 && (b.tile(i - 1, j) == null || b.tile(i, j).value() == b.tile(i - 1, j).value())) {
+                    return true;
+                }
+                // 检查下方
+                if (i < b.size() - 1 && (b.tile(i + 1, j) == null || b.tile(i, j).value() == b.tile(i + 1, j).value())) {
+                    return true;
+                }
+                // 检查左方
+                if (j > 0 && (b.tile(i, j - 1) == null || b.tile(i, j).value() == b.tile(i, j - 1).value())) {
+                    return true;
+                }
+                // 检查右方
+                if (j < b.size() - 1 && (b.tile(i, j + 1) == null || b.tile(i, j).value() == b.tile(i, j + 1).value())) {
+                    return true;
+                }
+            }
+        }
         return false;
     }
 
