@@ -60,7 +60,8 @@ public class BuggyAList<Item> {
       * returns deleted item. */
     public Item removeLast() {
         if ((size < items.length / 4) && (size > 4)) {
-            resize(size / 4);
+            // 原先为 size / 4 式子，现在为 items.length / 4 式子，为实际数组的大小，包括了空闲空间
+            resize(items.length / 4);
         }
         Item x = getLast();
         items[size - 1] = null;
