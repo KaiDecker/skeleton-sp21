@@ -4,27 +4,27 @@ ArrayDeque:
 
 Q: Give an example of at least one idea from the staff solution that would have made your solution better (if any).
 
-A: 
+A: 无
 
 Q: What's something you felt proud of in your code, if anything?
 
-A:
+A:为了能够充分利用空间，便将顺序队列臆造为一个环状的空间，变为循环队列
 
 Q: What's something that was particularly inelegant in your code, if anything?
 
-A:
+A:我认为没有，需要再多加了解Java
 
 Q: What did you learn by talking to your partner about writing ArrayDeque?
 
-A:
+A:无
 
 Q: What do you wish you would have known before writing ArrayDeque, if anything?
 
-A:
+A:我希望了解更多关于双端队列的形成和作用
 
 Q: If you wrote ArrayDeque again, what would you do differently, if anything?
 
-A:
+A:目前没想出
 
 -----
 
@@ -32,27 +32,27 @@ LinkedListDeque:
 
 Q: Give an example of at least one idea from the staff solution that would have made your solution better (if any).
 
-A: 
+A: 无
 
 Q: What's something you felt proud of in your code, if anything?
 
-A:
+A:使用结点来进行coding的，一般的解法
 
 Q: What's something that was particularly inelegant in your code, if anything?
 
-A:
+A:对于链表的书写不够了解
 
 Q: What did you learn by talking to your partner about writing LinkedListDeque?
 
-A:
+A:无
 
 Q: What do you wish you would have known before writing LinkedListDeque, if anything?
 
-A:
+A:无
 
 Q: If you wrote LinkedListDeque again, what would you do differently, if anything?
 
-A:
+A:无
 
 -----
 
@@ -60,4 +60,4 @@ Meta:
 
 Q: Did you like this design review process? Anything we should do differently next time?
 
-A: 
+A:还行
