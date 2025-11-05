@@ -1,8 +1,7 @@
 package gh2;
 
-// TODO: uncomment the following import once you're ready to start this portion
-// import deque.Deque;
-// TODO: maybe more imports
+import deque.ArrayDeque;
+import deque.Deque;
 
 //Note: This file will not compile until you complete the Deque implementations
 public class GuitarString {
@@ -13,43 +12,46 @@ public class GuitarString {
     private static final double DECAY = .996; // energy decay factor
 
     /* Buffer for storing sound data. */
-    // TODO: uncomment the following line once you're ready to start this portion
-    // private Deque<Double> buffer;
+    private final Deque<Double> buffer;
 
     /* Create a guitar string of the given frequency.  */
     public GuitarString(double frequency) {
-        // TODO: Create a buffer with capacity = SR / frequency. You'll need to
-        //       cast the result of this division operation into an int. For
-        //       better accuracy, use the Math.round() function before casting.
-        //       Your should initially fill your buffer array with zeros.
+        this.buffer = new ArrayDeque<>();
+        // 确定容量
+        int capacity = (int) Math.round(SR / frequency);
+        for (int i = 0; i < capacity; i++) {
+            this.buffer.addLast(0.0);
+        }
     }
 
 
     /* Pluck the guitar string by replacing the buffer with white noise. */
+    // 拨弦的方法
     public void pluck() {
-        // TODO: Dequeue everything in buffer, and replace with random numbers
-        //       between -0.5 and 0.5. You can get such a number by using:
-        //       double r = Math.random() - 0.5;
-        //
-        //       Make sure that your random numbers are different from each
-        //       other. This does not mean that you need to check that the numbers
-        //       are different from each other. It means you should repeatedly call
-        //       Math.random() - 0.5 to generate new random numbers for each array index.
+        int size = this.buffer.size();
+        for (int i = 0; i < size; i++) {
+            this.buffer.removeFirst();
+            // 替换为随机噪声
+            double r = Math.random() - 0.5;
+            this.buffer.addLast(r);
+        }
     }
 
     /* Advance the simulation one time step by performing one iteration of
      * the Karplus-Strong algorithm.
      */
+    // tic 只负责推进
     public void tic() {
-        // TODO: Dequeue the front sample and enqueue a new sample that is
-        //       the average of the two multiplied by the DECAY factor.
-        //       **Do not call StdAudio.play().**
+        // 首先将队首的元素拿掉
+        double first = this.buffer.removeFirst();
+        // 之后读取新的队首元素
+        double second = this.buffer.get(0);
+        double newSample = DECAY * 0.5 * (first + second);
+        this.buffer.addLast(newSample);
     }
 
     /* Return the double at the front of the buffer. */
     public double sample() {
-        // TODO: Return the correct thing.
-        return 0;
+        return this.buffer.get(0);
     }
 }
-    // TODO: Remove all comments that say TODO when you're done.
