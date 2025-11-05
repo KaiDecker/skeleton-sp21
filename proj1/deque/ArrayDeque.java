@@ -23,8 +23,8 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
             reSize(this.size * 2);
         }
         if (!isEmpty()) {
-            // 由于使用的是数组，所以只能使用数学计算来存储数据，以及指针指向。
-            // 即在可视化中数组中的第一个数据不一定在 arr[0]
+            // 由于使用的是数组来实现，采用的是类似圆的循环，需要取模进行运算
+            // 即在某些时候可视化中数组中的第一个数据不一定在 arr[0]
             this.first = (this.first - 1 + this.size) % this.size;
         }
         this.arr[first] = item;
@@ -52,6 +52,7 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
     public void printDeque() {
         int i = this.first;
         while (i != this.last) {
+            // 遍历数组进行打印
             System.out.print(this.arr[i] + " ");
             i = (i + 1) % this.size;
         }
@@ -60,15 +61,21 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
 
     @Override
     public T removeFirst() {
+        // 如果数组为空，则直接停止
         if (isEmpty()) {
             return null;
         }
+        // 长度减少
         this.length--;
+        // ret 指向第一个元素
         T ret = this.arr[this.first];
+        // 将 first 重新指向下一个元素
         this.first = (this.first + 1) % this.size;
+        // 若空闲的空间太多，则减少空间
         if (this.length * 4 < this.size) {
             reSize(this.size / 2);
         }
+        // 此方法返回原来的第一个元素
         return ret;
     }
 

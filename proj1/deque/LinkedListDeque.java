@@ -25,8 +25,10 @@ public class LinkedListDeque<T> implements Deque<T>, Iterable<T> {
     public void addFirst(T item) {
         Node p = new Node();
         p.elem = item;
+        // 我认为，一般写这个，先考虑 p 的 next 或者 prev（即 p.? = ?）
         p.next = sentinel.next;
         p.prev = sentinel;
+        // 之后再考虑什么可以赋值为 p （即 ? = p）
         p.next.prev = p;
         sentinel.next = p;
         size++;
