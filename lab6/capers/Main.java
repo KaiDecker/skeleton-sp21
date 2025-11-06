@@ -56,10 +56,12 @@ public class Main {
             String breed = args[2];
             int age = Integer.parseInt(args[3]);
             CapersRepository.makeDog(name, breed, age);
+            break;
         case "birthday":
             validateNumArgs("birthday", args, 2);
             String Name = args[1];
             CapersRepository.celebrateBirthday(Name);
+            break;
         default:
             exitWithError(String.format("Unknown command: %s", args[0]));
         }
