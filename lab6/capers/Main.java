@@ -58,8 +58,8 @@ public class Main {
             CapersRepository.makeDog(name, breed, age);
         case "birthday":
             validateNumArgs("birthday", args, 2);
-            String name = args[1];
-            CapersRepository.celebrateBirthday(name);
+            String Name = args[1];
+            CapersRepository.celebrateBirthday(Name);
         default:
             exitWithError(String.format("Unknown command: %s", args[0]));
         }
