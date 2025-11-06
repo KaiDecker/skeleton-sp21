@@ -44,7 +44,7 @@ public class CapersRepository {
             } catch (IOException ignore) {
             }
         }
-        f = join(CAPERS_FOLDER, "dog");
+        f = Dog.DOG_FOLDER;
         if (!f.exists()) {
             // 创建文件夹
             f.mkdir();

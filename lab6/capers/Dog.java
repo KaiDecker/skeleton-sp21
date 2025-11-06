@@ -10,14 +10,14 @@ import static capers.Utils.*;
 public class Dog implements Serializable {
 
     /** Folder that dogs live in. */
-    static final File DOG_FOLDER = join(CapersRepository.CAPERS_FOLDER, "dog");
+    static final File DOG_FOLDER = join(CapersRepository.CAPERS_FOLDER, "dogs");
 
     /** Age of dog. */
     private int age;
     /** Breed of dog. */
-    private String breed;
+    private final String breed;
     /** Name of dog. */
-    private String name;
+    private final String name;
 
     /**
      * Creates a dog object with the specified parameters.
@@ -48,7 +48,7 @@ public class Dog implements Serializable {
      */
     public void haveBirthday() {
         age += 1;
-        System.out.println(toString());
+        System.out.println(this);
         System.out.println("Happy birthday! Woof! Woof!");
     }
 
