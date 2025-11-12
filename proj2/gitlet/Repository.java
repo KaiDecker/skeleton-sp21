@@ -6,11 +6,19 @@ import java.util.List;
 
 import static gitlet.Utils.*;
 
-/** Represents a gitlet repository.
- *  TODO: It's a good idea to give a description here of what else this Class
- *  does at a high level.
+/**
+ * 表示一个 gitlet 仓库
+ * 文件路径如下：
+ * <p>
+ * .gitlet
+ * <br>├── refs/
+ * <br>│ ├── commits
+ * <br>│ └── heads/
+ * <br>├── objects/
+ * <br>├── HEAD
+ * <br>└── index
  *
- *  @author Kai Decker
+ * @author Kai Decker
  */
 
 public class Repository implements Serializable {

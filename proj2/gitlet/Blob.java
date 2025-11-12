@@ -13,7 +13,7 @@ import static gitlet.Utils.*;
  * @author Kai Decker
  */
 
-public class Blob implements Serializable{
+public class Blob implements Serializable {
 
     /* 文件内容 */
     private final String content;
