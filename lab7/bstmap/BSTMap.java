@@ -212,6 +212,14 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
         return keySet().iterator();
     }
 
+    public void printInOrder() {
+        StringBuilder s = new StringBuilder();
+        for (BSTNode node : this.root.nodesInOrder()) {
+            s.append(node.value.toString());
+        }
+        System.out.print(s);
+    }
+
     /**
      * 二叉搜索树中的搜索方法
      * 查找指定键的节点
