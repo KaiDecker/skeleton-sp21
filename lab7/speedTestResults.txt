@@ -1,0 +1,14 @@
+             nums         ULLMap          BSTMap           TreeMap         HashMap
+InOrder:     1000         0.03            0.01             0.00            0.00
+             10000        0.90            0.46             0.00            0.00
+             100000     StackOverflow     10.95            0.05            0.04
+             1000000    StackOverflow     104.87           0.68            0.45
+
+Random:      1000         0.01            0.00             0.00            0.00
+             10000        0.26            0.01             0.01            0.00
+             100000     StackOverflow     0.06             0.05            0.02
+             1000000    StackOverflow     1.69             1.31            0.52
+
+对于此次测试结果原因的猜测：
+Java 内置的TreeMap使用的是红黑树，因此在进行中序插入时，其性能明显优于二叉搜索树。
+而 HashMap 基于哈希表实现，能够在平均常数时间查找。
