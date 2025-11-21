@@ -1,52 +1,84 @@
 package byow.Core;
 
+import byow.Core.HUD.Framework;
 import byow.TileEngine.TERenderer;
 import byow.TileEngine.TETile;
 
+import static byow.Core.Utils.*;
+import static byow.Core.Utils.generateWorld;
+
+/**
+ * @author Kai Decker
+ */
+
 public class Engine {
+    /* 绘制世界的渲染器 */
     TERenderer ter = new TERenderer();
-    /* Feel free to change the width and height. */
+    /* 宽度和高度可以自由更改 */
     public static final int WIDTH = 80;
     public static final int HEIGHT = 30;
-
+    /* 用来标记是不是第一次输入，即是否已经初始化了世界 */
+    boolean start = false;
+    /* 用来保存一个世界的状态 */
+    Variables v = new Variables();
     /**
      * Method used for exploring a fresh world. This method should handle all inputs,
      * including inputs from the main menu.
      */
     public void interactWithKeyboard() {
+        ter.initialize(WIDTH, HEIGHT, 2, 2);
+
+        Framework f = new Framework();
+        f.drawMenu();
+
+        while (true) {
+            StringBuilder input = new StringBuilder();
+            if (!start) {
+                getStarted(input);
+            } else {
+                inputCommands(input);
+            }
+            TETile[][] tiles = interactWithInputString(input.toString());
+            if (tiles == null) {
+                return;
+            }
+            f.drawFramework(ter, tiles);
+        }
     }
 
     /**
-     * Method used for autograding and testing your code. The input string will be a series
-     * of characters (for example, "n123sswwdasdassadwas", "n123sss:q", "lwww". The engine should
-     * behave exactly as if the user typed these characters into the engine using
-     * interactWithKeyboard.
+     * 接收一串输入指令字符串来进行互动
      *
-     * Recall that strings ending in ":q" should cause the game to quite save. For example,
-     * if we do interactWithInputString("n123sss:q"), we expect the game to run the first
-     * 7 commands (n123sss) and then quit and save. If we then do
-     * interactWithInputString("l"), we should be back in the exact same state.
-     *
-     * In other words, both of these calls:
-     *   - interactWithInputString("n123sss:q")
-     *   - interactWithInputString("lww")
-     *
-     * should yield the exact same world state as:
-     *   - interactWithInputString("n123sssww")
-     *
-     * @param input the input string to feed to your program
-     * @return the 2D TETile[][] representing the state of the world
+     * @param input 传入给程序的输入字符串
+     * @return 表示当前世界状态的 2D TETile[][] 数组
      */
     public TETile[][] interactWithInputString(String input) {
-        // TODO: Fill out this method so that it run the engine using the input
-        // passed in as an argument, and return a 2D tile representation of the
-        // world that would have been drawn if the same inputs had been given
-        // to interactWithKeyboard().
-        //
-        // See proj3.byow.InputDemo for a demo of how you can make a nice clean interface
-        // that works for many different input types.
-
-        TETile[][] finalWorldFrame = null;
-        return finalWorldFrame;
+        /* 首先预处理字符串 */
+        input = fixInputString(this, input);
+        /* 当世界还没有初始化 */
+        if (!start) {
+            /* 加载存档 */
+            if (input.contains("L")) {
+                /* 调用 load 读取之前保存的状态 */
+                v = load();
+                /* 将 L 字符去掉 */
+                input = input.substring(1);
+            /* 新建世界 */
+            } else {
+                int end = input.indexOf('S') + 1;
+                generateWorld(v, input.substring(0, end));
+                input = input.substring(end);
+            }
+            /* 标记完成初始化 */
+            start = true;
+        }
+        /* 将剩下的字符串当作移动命令 */
+        move(v, input);
+        /* 如果字符串中出现了 ":q" 则退出 */
+        if (input.indexOf(':') > -1) {
+            quit(v);
+        }
+        /* 返回当前世界的瓦片矩阵 */
+        return v.tempWorld.getTiles();
     }
 }

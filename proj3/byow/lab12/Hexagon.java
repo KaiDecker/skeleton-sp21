@@ -7,6 +7,7 @@ import org.junit.Test;
  *
  * @author Kai Decker
  */
+
 public class Hexagon {
 
     /**
