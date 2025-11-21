@@ -1,11 +1,13 @@
 package byow.TileEngine;
 
-import java.awt.Color;
-import java.util.Arrays;
-import java.util.Random;
-
-import edu.princeton.cs.introcs.StdDraw;
 import byow.Core.RandomUtils;
+import edu.princeton.cs.introcs.StdDraw;
+
+import java.awt.*;
+import java.io.Serializable;
+import java.util.Arrays;
+import java.util.Objects;
+import java.util.Random;
 
 /**
  * The TETile object is used to represent a single tile in your world. A 2D array of tiles make up a
@@ -21,7 +23,7 @@ import byow.Core.RandomUtils;
  * to make your TETile class mutable, if you prefer.
  */
 
-public class TETile {
+public class TETile implements Serializable {
     private final char character; // Do not rename character or the autograder will break.
     private final Color textColor;
     private final Color backgroundColor;
