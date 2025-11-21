@@ -36,6 +36,6 @@ public class Characters implements Serializable {
             case "d", "D" -> frisk.goRight(world);
         }
         /* 更新世界地图上的当前角色位置，将该位置的瓷砖设置为 Tileset.Frisk ，代表角色位置 */
-        world.getTiles()[frisk.getX()][frisk.getY()] = Tileset.Frisk;
+        world.getTiles()[frisk.getX()][frisk.getY()] = Tileset.FRISK;
     }
 }

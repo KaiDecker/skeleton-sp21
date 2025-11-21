@@ -155,7 +155,7 @@ public class Utils {
     }
 
     /**
-     * @param input N#S, # means the seed number
+     * @param input N#S, #为种子代码
      */
     public static void generateWorld(Variables v, String input) {
         long seed = Long.parseLong(input, 1, input.length() - 1, 10);

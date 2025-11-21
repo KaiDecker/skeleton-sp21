@@ -37,7 +37,7 @@ public class Tileset {
     public static final TETile MOUNTAIN = new TETile('▲', Color.gray, Color.black, "mountain");
     public static final TETile TREE = new TETile('♠', Color.green, Color.black, "tree");
     public static final TETile ROOM = new TETile('·', Color.darkGray, Color.black, "room");
-    public static final TETile Frisk = new TETile('M', Color.black, Color.black, "Frisk",
+    public static final TETile FRISK = new TETile('M', Color.black, Color.black, "Frisk",
             join(CWD, "byow", "data", "src", "frisk.png").toString());
     public static final TETile ENTRY = new TETile('*', Color.darkGray, Color.black, "entry");
 }

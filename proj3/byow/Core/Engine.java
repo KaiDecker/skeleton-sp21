@@ -65,9 +65,11 @@ public class Engine {
                 input = input.substring(1);
             /* 新建世界 */
             } else {
-                int end = input.indexOf('S') + 1;
-                generateWorld(v, input.substring(0, end));
-                input = input.substring(end);
+                int begin = input.indexOf('N') + 1;
+                int end = input.indexOf('S', begin);
+                long seed = Long.parseLong(input, begin+1, end, 10);
+                World world = new World(WIDTH, HEIGHT);
+                world.initializeWorld(seed);
             }
             /* 标记完成初始化 */
             start = true;
