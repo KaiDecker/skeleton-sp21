@@ -191,4 +191,24 @@ public class TETile implements Serializable {
 
         return copy;
     }
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || o.getClass() != this.getClass()) {
+            return false;
+        }
+        return this.character() == ((TETile) o).character
+                && this.description.equals(((TETile) o).description)
+                && this.backgroundColor.equals(((TETile) o).backgroundColor)
+                && this.textColor.equals(((TETile) o).textColor)
+                && Objects.equals(this.filepath, ((TETile) o).filepath);
+    }
+
+    @Override
+    public int hashCode() {
+        return character + description.hashCode()
+                + backgroundColor.hashCode() + textColor.hashCode();
+    }
 }
